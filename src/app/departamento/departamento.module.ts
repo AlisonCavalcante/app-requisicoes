@@ -6,17 +6,19 @@ import { ComumModule } from '../shared/login/modules/comum.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { DepartamentoComponent } from './departamento.component';
+import { DialogInsertDepartamentoComponent } from './dialog-insert-departamento/dialog-insert-departamento.component';
 
 
 @NgModule({
   declarations: [
-    DepartamentoComponent
+    DepartamentoComponent,
+    DialogInsertDepartamentoComponent
   ],
   imports: [
     CommonModule,
     DepartamentoRoutingModule,
     ComumModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ]
 })
 export class DepartamentoModule { }

@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit {
   emailEnviado!: boolean;
   formulario!: FormGroup;
 
-  constructor(private router: Router, private formBuilder: FormBuilder) {}
+  constructor(private authService: AuthService,private router: Router, private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     this.formulario = this.formBuilder.group({
@@ -29,6 +30,8 @@ export class LoginComponent implements OnInit {
         ],
       ],
     });
+
+    this.authService.get();
   }
 
   logar() {

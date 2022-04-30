@@ -10,9 +10,9 @@ export class AuthService {
   constructor(private http: HttpClient) {
   }
 
-  get(){
-    this.http.get(Constantes.URL_BASE + 'pessoa').subscribe((res) => {
-      console.log(res);
-    })
-  }
+  // get(){
+  //   this.http.get(Constantes.URL_BASE + 'pessoa').subscribe((res) => {
+  //     console.log(res);
+  //   })
+  // }
 }

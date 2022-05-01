@@ -18,9 +18,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="text-center">Nome</td>
-            <td class="text-center">Telefone</td>
+          <tr *ngFor="let departamento of departamentos">
+            <td class="text-center">{{departamento.nome}}</td>
+            <td class="text-center">{{departamento.telefone}}</td>
             <td class="text-center">
               <button type="button" (click)="selecionaDepartamento()" class="btn btn-success  ">
                 <i class="fa fa-edit"></i>

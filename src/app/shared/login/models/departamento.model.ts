@@ -1,6 +1,5 @@
 export interface Departamento{
-  _id?: number;
-  email: string;
-  senha: string;
-  aprovado: boolean;
+  _id?: string;
+  nome: string;
+  telefone: string;
 }

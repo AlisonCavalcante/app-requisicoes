@@ -1,3 +1,4 @@
+import { DepartamentoService } from './../../services/departamento.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Input } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
@@ -12,7 +13,7 @@ export class DialogInsertDepartamentoComponent implements OnInit {
   @Input() displayDialogDepartamento!: boolean;
   form!: FormGroup;
   edit!: boolean;
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private departamentoService: DepartamentoService) { }
 
   ngOnInit(): void {
     this.configForm();
@@ -26,6 +27,7 @@ export class DialogInsertDepartamentoComponent implements OnInit {
   }
 
   save(){
-
+    console.log(this.form.value);
+    this.departamentoService.createDepartamento(this.form.value).subscribe();
   }
 }

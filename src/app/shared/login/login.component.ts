@@ -1,7 +1,9 @@
+import { Observable } from 'rxjs';
 import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from './models/user.model';
 
 @Component({
   selector: 'app-login',
@@ -12,8 +14,14 @@ export class LoginComponent implements OnInit {
   mensagem!: string;
   emailEnviado!: boolean;
   formulario!: FormGroup;
+  userLogado: boolean = false;
+  usuario!: User;
 
-  constructor(private authService: AuthService,private router: Router, private formBuilder: FormBuilder) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private formBuilder: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.formulario = this.formBuilder.group({
@@ -30,14 +38,40 @@ export class LoginComponent implements OnInit {
         ],
       ],
     });
-
-
   }
 
   logar() {
-    this.router.navigate([''])
-    console.log(this.formulario);
+    let email = this.formulario.get('email')?.value;
+    this.authService.getUser(email).subscribe(
+      (res:  User) => {
+        this.usuario = res;
+        this.mensagem = '';
+        if(this.validarSenha()){
+          this.mensagem = 'Usuário Logado';
+          this.userLogado = true;
+        }else
+        this.mensagem = 'Senha  incorreta'
+
+      },
+      (error) => {
+        this.mensagem = error.error.mensagem;
+        this.resetForm();
+      }
+    );
   }
 
   enviaLink() {}
+
+  resetForm() {
+    this.formulario.reset();
+  }
+
+  validarSenha(): boolean{
+    let senha = this.formulario.get('senha')?.value;
+    if(this.usuario.senha === senha){
+      return true
+    } else
+    return false
+  }
+
 }

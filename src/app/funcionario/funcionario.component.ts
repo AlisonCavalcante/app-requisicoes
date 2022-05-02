@@ -14,7 +14,7 @@ export class FuncionarioComponent implements OnInit {
   form!: FormGroup;
   departamentos$!: Observable<Departamento[]>;
   departamentoFiltro!: string;
-
+  displayDialogFuncionario: boolean = false;
   constructor(private formBuilder: FormBuilder, private departamentoService: DepartamentoService) { }
 
   ngOnInit(): void {
@@ -22,7 +22,9 @@ export class FuncionarioComponent implements OnInit {
     this.departamentoFiltro = 'TODOS';
   }
 
-  add(){}
+  add(){
+    this.displayDialogFuncionario = true;
+  }
 
   selecionaFuncionario(){}
 

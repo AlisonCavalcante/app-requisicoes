@@ -48,7 +48,10 @@ export class LoginComponent implements OnInit {
         this.usuario = res;
         this.mensagem = '';
         if(this.validarSenha()){
+          this.authService.updateLogin(this.usuario);
+          console.log( this.authService.isLoggedIn$)
           this.mensagem = 'Usuário Logado';
+          this.router.navigate(['painel']);
           this.userLogado = true;
         }else
         this.mensagem = 'Senha  incorreta'

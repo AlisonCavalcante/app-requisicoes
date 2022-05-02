@@ -30,7 +30,6 @@ export class DialogInsertDepartamentoComponent implements OnInit {
     console.log(this.form.value);
     this.departamentoService.createDepartamento(this.form.value).subscribe((res) => {
       this.displayDialogDepartamento = false;
-      window.location.reload();
     });
 
   }

@@ -1,3 +1,6 @@
+import { DepartamentoService } from './../services/departamento.service';
+import { Departamento } from './../shared/login/models/departamento.model';
+import { Observable } from 'rxjs';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
@@ -9,10 +12,14 @@ import { Component, OnInit } from '@angular/core';
 export class FuncionarioComponent implements OnInit {
 
   form!: FormGroup;
+  departamentos$!: Observable<Departamento[]>;
+  departamentoFiltro!: string;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private departamentoService: DepartamentoService) { }
 
   ngOnInit(): void {
+    this.departamentos$ = this.departamentoService.getAll();
+    this.departamentoFiltro = 'TODOS';
   }
 
   add(){}

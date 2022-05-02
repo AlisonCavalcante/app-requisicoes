@@ -28,6 +28,9 @@ export class DialogInsertDepartamentoComponent implements OnInit {
 
   save(){
     console.log(this.form.value);
-    this.departamentoService.createDepartamento(this.form.value).subscribe();
+    this.departamentoService.createDepartamento(this.form.value).subscribe((res) => {
+      this.displayDialogDepartamento = false;
+    });
+
   }
 }

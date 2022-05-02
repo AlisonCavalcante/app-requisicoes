@@ -13,4 +13,5 @@ export class AuthService {
   getUser(email: string): Observable<User> {
     return this.http.get<User>(Constantes.URL_BASE + "pessoa/" + email);
   }
+
 }

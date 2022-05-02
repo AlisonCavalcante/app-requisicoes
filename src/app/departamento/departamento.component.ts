@@ -23,6 +23,7 @@ export class DepartamentoComponent implements OnInit, OnChanges {
   ngOnInit(): void {
    this.inicializarForm();
    this.departamentos$ = this.departamentoService.getAll();
+   console.log(this.departamentos$)
   }
 
 
@@ -43,10 +44,12 @@ export class DepartamentoComponent implements OnInit, OnChanges {
      this.displayDialogDepartamento = true;
   }
 
-  selecionaDepartamento() {}
+  selecionaDepartamento(departamento: Departamento) {
+    console.log(departamento)
+  }
 
-  delete(departamento: Departamento) {
-    this.departamentoService.delete(departamento).subscribe();
+  delete(departamento: Departamento, index: number) {
+    this.departamentoService.delete(departamento, index).subscribe();
   }
 
   save() {

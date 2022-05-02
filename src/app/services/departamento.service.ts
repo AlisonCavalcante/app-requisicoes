@@ -30,8 +30,8 @@ export class DepartamentoService {
     return this.departamentoSubject$.asObservable();
   }
 
-  delete(departamento: Departamento): Observable<Departamento> {
-    return this.http.delete<Departamento>(Constantes.URL_BASE +  'departamento/' + departamento._id);
+  delete(departamento: Departamento, index: number): Observable<Departamento> {
+    return this.http.delete<Departamento>(Constantes.URL_BASE +  'departamento/' + departamento._id).pipe(tap((dep: Departamento) => this.departamentoSubject$.getValue().splice(index, 1)))
   }
 
 }

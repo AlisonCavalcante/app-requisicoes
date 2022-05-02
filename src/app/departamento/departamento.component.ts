@@ -38,7 +38,9 @@ export class DepartamentoComponent implements OnInit {
 
   selecionaDepartamento() {}
 
-  delete() {}
+  delete(departamento: Departamento) {
+    this.departamentoService.delete(departamento).subscribe();
+  }
 
   save() {
 

@@ -23,4 +23,8 @@ export class DepartamentoService {
     return this.http.get<Departamento[]>(Constantes.URL_BASE + 'departamento');
   }
 
+  delete(departamento: Departamento): Observable<Departamento> {
+    return this.http.delete<Departamento>(Constantes.URL_BASE +  'departamento/' + departamento._id);
+  }
+
 }

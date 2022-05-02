@@ -23,6 +23,10 @@ const routes: Routes = [
     path:'movimentacao',
     loadChildren: () => import('./movimentacao/movimentacao.module').then((m) => m.MovimentacaoModule)
   },
+  {
+    path:'painel',
+    loadChildren: () => import('./painel/painel.module').then((p) => p.PainelModule)
+  },
 ];
 
 @NgModule({

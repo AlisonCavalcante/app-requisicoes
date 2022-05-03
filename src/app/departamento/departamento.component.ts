@@ -17,7 +17,7 @@ export class DepartamentoComponent implements OnInit, OnChanges {
   form!: FormGroup;
   edit!: boolean;
   departamentos$!: Observable<Departamento[]>;
-
+  departamentoEdit!: Departamento;
   constructor(private formBuilder: FormBuilder, private departamentoService: DepartamentoService) {}
 
   ngOnInit(): void {
@@ -49,7 +49,10 @@ export class DepartamentoComponent implements OnInit, OnChanges {
   }
 
   selecionaDepartamento(departamento: Departamento) {
-    console.log(departamento)
+    this.departamentoEdit = departamento;
+    console.log( this.departamentoEdit)
+    this.edit = true;
+    this.displayDialogDepartamento = true;
   }
 
   delete(departamento: Departamento, index: number) {

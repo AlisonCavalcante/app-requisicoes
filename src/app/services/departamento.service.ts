@@ -1,8 +1,8 @@
+import { Departamento } from './../shared/login/models/departamento.model';
 import { Constantes } from './../util/constantes';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Departamento } from '../shared/login/models/departamento.model';
 import { BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -30,8 +30,25 @@ export class DepartamentoService {
     return this.departamentoSubject$.asObservable();
   }
 
+  update(departamento: Departamento): Observable<Departamento>{
+    return this.http.patch<Departamento>(Constantes.URL_BASE  + `departamento/${departamento._id}`,departamento)
+    .pipe(
+      tap((dep)=> {
+        let departamentos = this.departamentoSubject$.getValue();
+        let i = departamentos.findIndex(d => d._id === departamento._id);
+        if(i>=0){
+          console.log(dep)
+          departamentos[i] = dep;
+        }
+      })
+    )
+  }
+
   delete(departamento: Departamento, index: number): Observable<Departamento> {
+    console.log(departamento._id)
     return this.http.delete<Departamento>(Constantes.URL_BASE +  'departamento/' + departamento._id).pipe(tap((dep: Departamento) => this.departamentoSubject$.getValue().splice(index, 1)))
   }
+
+
 
 }

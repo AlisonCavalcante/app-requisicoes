@@ -1,3 +1,4 @@
+import { Departamento } from './../../shared/login/models/departamento.model';
 import { DepartamentoService } from './../../services/departamento.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Input, Output } from '@angular/core';
@@ -14,7 +15,9 @@ export class DialogInsertDepartamentoComponent implements OnInit {
   @Input() displayDialogDepartamento!: boolean;
   @Output() isShow = new EventEmitter;
   form!: FormGroup;
-  edit!: boolean;
+  @Input() edit!: boolean;
+  @Input() departamentoEdit!: Departamento;
+
   constructor(private formBuilder: FormBuilder, private departamentoService: DepartamentoService) { }
 
   ngOnInit(): void {
@@ -29,11 +32,21 @@ export class DialogInsertDepartamentoComponent implements OnInit {
   }
 
   save(){
-    this.departamentoService.createDepartamento(this.form.value).subscribe((res) => {
-      this.isShow.emit(false);
-      this.displayDialogDepartamento = false;
+    if(this.edit){
+      this.departamentoEdit.nome = this.form.get('nome')?.value;
+      this.departamentoEdit.telefone = this.form.get('telefone')?.value;
+      console.log(this.departamentoEdit)
+      this.departamentoService.update(this.departamentoEdit).subscribe((res)=> {
+        this.isShow.emit(false);
+        this.displayDialogDepartamento = false;
+      })
+    } else {
+      this.departamentoService.createDepartamento(this.form.value).subscribe((res) => {
+        this.isShow.emit(false);
+        this.displayDialogDepartamento = false;
 
-    });
+      });
+    }
     this.resetForm();
   }
 

@@ -1,7 +1,8 @@
 import { DepartamentoService } from './../../services/departamento.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Input } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
+import { Input, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
+
 
 @Component({
   selector: 'app-dialog-insert-departamento',
@@ -11,6 +12,7 @@ import { Component, OnInit } from '@angular/core';
 export class DialogInsertDepartamentoComponent implements OnInit {
 
   @Input() displayDialogDepartamento!: boolean;
+  @Output() isShow = new EventEmitter;
   form!: FormGroup;
   edit!: boolean;
   constructor(private formBuilder: FormBuilder, private departamentoService: DepartamentoService) { }
@@ -27,10 +29,15 @@ export class DialogInsertDepartamentoComponent implements OnInit {
   }
 
   save(){
-    console.log(this.form.value);
     this.departamentoService.createDepartamento(this.form.value).subscribe((res) => {
+      this.isShow.emit(false);
       this.displayDialogDepartamento = false;
-    });
 
+    });
+    this.resetForm();
+  }
+
+  resetForm(){
+    this.form.reset();
   }
 }

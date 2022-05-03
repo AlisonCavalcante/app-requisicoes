@@ -44,6 +44,10 @@ export class DepartamentoComponent implements OnInit, OnChanges {
      this.displayDialogDepartamento = true;
   }
 
+  onShowDialog(event: any){
+   this.displayDialogDepartamento = event;
+  }
+
   selecionaDepartamento(departamento: Departamento) {
     console.log(departamento)
   }

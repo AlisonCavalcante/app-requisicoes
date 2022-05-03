@@ -37,7 +37,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr *ngFor="let funcionario of funcionarios$ | async">
             <td class="text-center">
               <img
                 [src]="'/assets/imgs/no-image.png'"
@@ -45,10 +45,10 @@
                 class="img-fluid"
               />
             </td>
-            <td class="text-center">Nome</td>
-            <td class="text-center">Email</td>
-            <td class="text-center">Departamento</td>
-            <td class="text-center">Função</td>
+            <td class="text-center">{{funcionario.nome}}</td>
+            <td class="text-center">{{funcionario.email}}</td>
+            <td class="text-center">{{funcionario.departamento[0]}}</td>
+            <td class="text-center">{{funcionario.funcao}}</td>
             <td class="text-center">
               <button
                 type="button"

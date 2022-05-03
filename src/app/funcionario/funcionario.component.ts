@@ -1,3 +1,5 @@
+import { Funcionario } from './../shared/login/models/funcionario.model';
+import { FuncionarioService } from './../services/funcionario.service';
 import { DepartamentoService } from './../services/departamento.service';
 import { Departamento } from './../shared/login/models/departamento.model';
 import { Observable } from 'rxjs';
@@ -13,14 +15,16 @@ export class FuncionarioComponent implements OnInit {
 
   form!: FormGroup;
   departamentos$!: Observable<Departamento[]>;
+  funcionarios$!: Observable<Funcionario[]>;
   departamentoFiltro!: string;
   edit!: boolean;
   displayDialogFuncionario: boolean = false;
-  constructor(private formBuilder: FormBuilder, private departamentoService: DepartamentoService) { }
+  constructor(private formBuilder: FormBuilder, private funcionarioService: FuncionarioService ,private departamentoService: DepartamentoService) { }
 
   ngOnInit(): void {
     this.departamentos$ = this.departamentoService.getAll();
     this.departamentoFiltro = 'TODOS';
+    this.funcionarios$ = this.funcionarioService.getAll();
   }
 
   add(){

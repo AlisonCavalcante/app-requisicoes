@@ -23,7 +23,6 @@ export class DepartamentoService {
   getAll(): Observable<Departamento[]>{
     if(!this.load){
       this.http.get<Departamento[]>(Constantes.URL_BASE + 'departamento')
-      .pipe(tap((deps) => console.log('')))
       .subscribe(this.departamentoSubject$);
       this.load = true
     }

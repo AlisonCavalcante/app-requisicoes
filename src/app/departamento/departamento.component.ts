@@ -4,7 +4,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { DepartamentoService } from '../services/departamento.service';
 import { OnChanges } from '@angular/core';
-import { AfterViewChecked } from '@angular/core';
 
 @Component({
   selector: 'app-departamento',
@@ -28,7 +27,7 @@ export class DepartamentoComponent implements OnInit, OnChanges {
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
+
   }
 
   inicializarForm(){
@@ -39,9 +38,7 @@ export class DepartamentoComponent implements OnInit, OnChanges {
   }
 
   add() {
-    this.edit = false;
-     console.log(this.displayDialogDepartamento);
-     this.displayDialogDepartamento = true;
+     this.showDialog(true, false);
   }
 
   onShowDialog(event: any){
@@ -50,9 +47,12 @@ export class DepartamentoComponent implements OnInit, OnChanges {
 
   selecionaDepartamento(departamento: Departamento) {
     this.departamentoEdit = departamento;
-    console.log( this.departamentoEdit)
-    this.edit = true;
-    this.displayDialogDepartamento = true;
+    this.showDialog(true, true);
+  }
+
+  showDialog(show: boolean, isEdit: boolean){
+    this.edit = isEdit;
+    this.displayDialogDepartamento = show;
   }
 
   delete(departamento: Departamento, index: number) {

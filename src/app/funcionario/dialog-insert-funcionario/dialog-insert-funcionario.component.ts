@@ -14,7 +14,8 @@ export class DialogInsertFuncionarioComponent implements OnInit {
   @Input() displayDialogFuncionario: boolean =false;
   @Input() departamentos$!: Observable<Departamento[]>;
   form!: FormGroup
-  edit: boolean = false;
+  @Input() edit: boolean = false;
+
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {

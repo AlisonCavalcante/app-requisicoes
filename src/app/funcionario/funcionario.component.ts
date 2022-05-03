@@ -14,6 +14,7 @@ export class FuncionarioComponent implements OnInit {
   form!: FormGroup;
   departamentos$!: Observable<Departamento[]>;
   departamentoFiltro!: string;
+  edit!: boolean;
   displayDialogFuncionario: boolean = false;
   constructor(private formBuilder: FormBuilder, private departamentoService: DepartamentoService) { }
 
@@ -23,10 +24,17 @@ export class FuncionarioComponent implements OnInit {
   }
 
   add(){
-    this.displayDialogFuncionario = true;
+    this.showDialog(true, false);
   }
 
-  selecionaFuncionario(){}
+  selecionaFuncionario(){
+    this.showDialog(true, true);
+  }
+
+  showDialog(show: boolean, isEdit: boolean){
+    this.edit = isEdit;
+    this.displayDialogFuncionario = show;
+  }
 
   delete(){}
 

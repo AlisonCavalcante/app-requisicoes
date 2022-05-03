@@ -1,7 +1,7 @@
 import { Departamento } from './../../shared/login/models/departamento.model';
 import { DepartamentoService } from './../../services/departamento.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Input, Output } from '@angular/core';
+import { Input, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { Component, OnInit, EventEmitter } from '@angular/core';
 
 
@@ -10,7 +10,7 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
   templateUrl: './dialog-insert-departamento.component.html',
   styleUrls: ['./dialog-insert-departamento.component.sass']
 })
-export class DialogInsertDepartamentoComponent implements OnInit {
+export class DialogInsertDepartamentoComponent implements OnInit, OnChanges {
 
   @Input() displayDialogDepartamento!: boolean;
   @Output() isShow = new EventEmitter;
@@ -22,6 +22,18 @@ export class DialogInsertDepartamentoComponent implements OnInit {
 
   ngOnInit(): void {
     this.configForm();
+
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes){
+      if(this.edit){
+        this.form.patchValue({
+          nome: this.departamentoEdit.nome,
+          telefone: this.departamentoEdit.telefone
+        })
+      }
+    }
   }
 
   configForm() {
@@ -33,21 +45,28 @@ export class DialogInsertDepartamentoComponent implements OnInit {
 
   save(){
     if(this.edit){
-      this.departamentoEdit.nome = this.form.get('nome')?.value;
-      this.departamentoEdit.telefone = this.form.get('telefone')?.value;
-      console.log(this.departamentoEdit)
-      this.departamentoService.update(this.departamentoEdit).subscribe((res)=> {
-        this.isShow.emit(false);
-        this.displayDialogDepartamento = false;
-      })
+      let departamento = this.updateDepartamento();
+      this.departamentoService.update(departamento).subscribe((res)=> {
+        this.reset(false);
+      });
     } else {
       this.departamentoService.createDepartamento(this.form.value).subscribe((res) => {
-        this.isShow.emit(false);
-        this.displayDialogDepartamento = false;
-
+        this.reset(false);
       });
     }
     this.resetForm();
+  }
+
+  updateDepartamento(): Departamento{
+    this.departamentoEdit.nome = this.form.get('nome')?.value;
+    this.departamentoEdit.telefone = this.form.get('telefone')?.value;
+    return this.departamentoEdit;
+  }
+
+  reset(valor: boolean){
+    this.isShow.emit(valor);
+    this.edit = valor;
+    this.displayDialogDepartamento = valor;
   }
 
   resetForm(){

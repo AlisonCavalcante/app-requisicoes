@@ -28,7 +28,7 @@ export class FuncionarioService {
       .pipe(
         map((funcionarios) =>{
           for(let f of funcionarios){
-            let id = (f.departamento as string);
+            let id = f.departamentoId;
             f.departamento = this.departamentos.filter(dep => dep._id == id)
           }
           return funcionarios

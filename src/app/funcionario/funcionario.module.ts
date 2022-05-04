@@ -13,7 +13,7 @@ import { DialogInsertFuncionarioComponent } from './dialog-insert-funcionario/di
 @NgModule({
   declarations: [
     FuncionarioComponent,
-    DialogInsertFuncionarioComponent
+    DialogInsertFuncionarioComponent,
   ],
   imports: [
     CommonModule,

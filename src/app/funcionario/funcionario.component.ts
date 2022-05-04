@@ -9,17 +9,20 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-funcionario',
   templateUrl: './funcionario.component.html',
-  styleUrls: ['./funcionario.component.sass']
+  styleUrls: ['./funcionario.component.sass'],
 })
 export class FuncionarioComponent implements OnInit {
-
   form!: FormGroup;
   departamentos$!: Observable<Departamento[]>;
   funcionarios$!: Observable<Funcionario[]>;
   departamentoFiltro!: string;
   edit!: boolean;
   displayDialogFuncionario: boolean = false;
-  constructor(private formBuilder: FormBuilder, private funcionarioService: FuncionarioService ,private departamentoService: DepartamentoService) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private funcionarioService: FuncionarioService,
+    private departamentoService: DepartamentoService
+  ) {}
 
   ngOnInit(): void {
     this.departamentos$ = this.departamentoService.getAll();
@@ -27,19 +30,18 @@ export class FuncionarioComponent implements OnInit {
     this.funcionarios$ = this.funcionarioService.getAll();
   }
 
-  add(){
+  add() {
     this.showDialog(true, false);
   }
 
-  selecionaFuncionario(){
+  selecionaFuncionario() {
     this.showDialog(true, true);
   }
 
-  showDialog(show: boolean, isEdit: boolean){
+  showDialog(show: boolean, isEdit: boolean) {
     this.edit = isEdit;
     this.displayDialogFuncionario = show;
   }
 
-  delete(){}
-
+  delete() {}
 }

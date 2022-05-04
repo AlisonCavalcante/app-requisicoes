@@ -6,5 +6,6 @@ export interface Funcionario{
   email: string,
   funcao: string,
   ultimoAcesso: any,
-  departamento: Departamento [] | string
+  departamentoId: string,
+  departamento: Departamento []
 }

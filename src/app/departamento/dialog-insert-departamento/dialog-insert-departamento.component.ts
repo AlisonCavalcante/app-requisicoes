@@ -14,6 +14,7 @@ export class DialogInsertDepartamentoComponent implements OnInit, OnChanges {
 
   @Input() displayDialogDepartamento!: boolean;
   @Output() isShow = new EventEmitter;
+  @Output() isEdit = new EventEmitter;
   form!: FormGroup;
   @Input() edit!: boolean;
   @Input() departamentoEdit!: Departamento;
@@ -27,7 +28,9 @@ export class DialogInsertDepartamentoComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if(changes){
+      console.log(changes)
       if(this.edit){
+        console.log('editando')
         this.form.patchValue({
           nome: this.departamentoEdit.nome,
           telefone: this.departamentoEdit.telefone
@@ -65,7 +68,7 @@ export class DialogInsertDepartamentoComponent implements OnInit, OnChanges {
 
   reset(valor: boolean){
     this.isShow.emit(valor);
-    this.edit = valor;
+    this.isEdit.emit(valor);
     this.displayDialogDepartamento = valor;
   }
 

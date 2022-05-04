@@ -45,12 +45,17 @@ export class DepartamentoComponent implements OnInit, OnChanges {
    this.displayDialogDepartamento = event;
   }
 
+  onEdit(event: any){
+    this.edit = event;
+  }
+
   selecionaDepartamento(departamento: Departamento) {
     this.departamentoEdit = departamento;
     this.showDialog(true, true);
   }
 
   showDialog(show: boolean, isEdit: boolean){
+    console.log(isEdit)
     this.edit = isEdit;
     this.displayDialogDepartamento = show;
   }

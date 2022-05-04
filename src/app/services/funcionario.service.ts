@@ -40,9 +40,22 @@ export class FuncionarioService {
     return this.funcionarioSubject$.asObservable();
   }
 
-  create(funcionario: Funcionario){
-    return this.http.post(Constantes.URL_BASE + "", funcionario);
+  update(funcionario: Funcionario): Observable<Funcionario>{
+    return this.http.patch<Funcionario>(Constantes.URL_BASE + `funcionario/${funcionario._id}`, funcionario);
   }
+  //tap((f: Funcionario) => console.log(f) )
+
+  create(funcionario: Funcionario): Observable<Funcionario>{
+    return this.http.post<Funcionario>(Constantes.URL_BASE + 'funcionario', funcionario)
+    .pipe(
+      map((f) =>{
+          let id = f.departamentoId;
+          f.departamento = this.departamentos.filter(dep => dep._id == id)
+          this.funcionarioSubject$.getValue().push(f);
+        return f
+      }),
+    );
+   }
 
   delete(funcionario: Funcionario){
     return this.http.delete(Constantes.URL_BASE + 'funcionario/' + funcionario._id);

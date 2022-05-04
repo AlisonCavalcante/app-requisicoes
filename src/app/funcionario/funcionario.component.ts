@@ -15,6 +15,7 @@ export class FuncionarioComponent implements OnInit {
   form!: FormGroup;
   departamentos$!: Observable<Departamento[]>;
   funcionarios$!: Observable<Funcionario[]>;
+  funcionarioEdit!: Funcionario;
   departamentoFiltro!: string;
   edit!: boolean;
   displayDialogFuncionario: boolean = false;
@@ -34,7 +35,8 @@ export class FuncionarioComponent implements OnInit {
     this.showDialog(true, false);
   }
 
-  selecionaFuncionario() {
+  selecionaFuncionario(funcionario: Funcionario) {
+    this.funcionarioEdit = funcionario
     this.showDialog(true, true);
   }
 
@@ -42,6 +44,9 @@ export class FuncionarioComponent implements OnInit {
     this.edit = isEdit;
     this.displayDialogFuncionario = show;
   }
+  onShowDialog(event: any){
+    this.displayDialogFuncionario = event;
+   }
 
   delete() {}
 }

@@ -52,7 +52,7 @@
             <td class="text-center">
               <button
                 type="button"
-                (click)="selecionaFuncionario()"
+                (click)="selecionaFuncionario(funcionario)"
                 class="btn btn-success"
               >
                 <i class="fa fa-edit"></i>
@@ -75,4 +75,4 @@
     </div>
   </div>
 </div>
-<app-dialog-insert-funcionario [displayDialogFuncionario]="displayDialogFuncionario" [departamentos$]="departamentos$" [edit]="edit"></app-dialog-insert-funcionario>
+<app-dialog-insert-funcionario (isShow)="onShowDialog($event)" [funcionarioEdit]="funcionarioEdit" [displayDialogFuncionario]="displayDialogFuncionario" [departamentos$]="departamentos$" [edit]="edit"></app-dialog-insert-funcionario>

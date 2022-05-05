@@ -48,5 +48,7 @@ export class FuncionarioComponent implements OnInit {
     this.displayDialogFuncionario = event;
    }
 
-  delete() {}
+  delete(funcionario: Funcionario, index: number) {
+    this.funcionarioService.delete(funcionario,index).subscribe();
+  }
 }

@@ -8,6 +8,7 @@ import { Funcionario } from '../shared/login/models/funcionario.model';
 import { tap} from 'rxjs/operators';
 import { map } from 'rxjs';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,28 +23,37 @@ export class FuncionarioService {
   getAll(): Observable<Funcionario[]>{
     this.departamentoService.getAll().subscribe((dep) =>{
       this.departamentos = dep
+      if(!this.load){
+        this.http.get<Funcionario[]>(Constantes.URL_BASE + 'funcionario')
+        .pipe(
+          map((funcionarios) =>{
+            for(let f of funcionarios){
+              f.departamento = this.departamentos.filter(dep => dep._id == f.departamentoId)
+            }
+            return funcionarios
+          })
+        )
+        .subscribe(this.funcionarioSubject$);
+        this.load = true;
+      }
     })
-    if(!this.load){
-      this.http.get<Funcionario[]>(Constantes.URL_BASE + 'funcionario')
-      .pipe(
-        map((funcionarios) =>{
-          for(let f of funcionarios){
-            let id = f.departamentoId;
-            f.departamento = this.departamentos.filter(dep => dep._id == id)
-          }
-          return funcionarios
-        })
-      )
-      .subscribe(this.funcionarioSubject$);
-      this.load = true;
-    }
     return this.funcionarioSubject$.asObservable();
   }
 
   update(funcionario: Funcionario): Observable<Funcionario>{
-    return this.http.patch<Funcionario>(Constantes.URL_BASE + `funcionario/${funcionario._id}`, funcionario);
+    return this.http.patch<Funcionario>(Constantes.URL_BASE + `funcionario/${funcionario._id}`, funcionario)
+    .pipe(
+      tap((func)=> {
+        let funcionarios = this.funcionarioSubject$.getValue();
+        let i = funcionarios.findIndex(f => f._id === funcionario._id);
+        if(i>=0){
+          func.departamento = this.departamentos.filter(f => f._id == func.departamentoId)
+          this.funcionarioSubject$.getValue().splice(i, 1, func);
+        }
+      })
+    )
   }
-  //tap((f: Funcionario) => console.log(f) )
+
 
   create(funcionario: Funcionario): Observable<Funcionario>{
     return this.http.post<Funcionario>(Constantes.URL_BASE + 'funcionario', funcionario)
@@ -57,8 +67,8 @@ export class FuncionarioService {
     );
    }
 
-  delete(funcionario: Funcionario){
-    return this.http.delete(Constantes.URL_BASE + 'funcionario/' + funcionario._id);
+   delete(funcionario: Funcionario, index: number): Observable<Funcionario> {
+    return this.http.delete<Funcionario>(Constantes.URL_BASE +  'funcionario/' + funcionario._id).pipe(tap((fun: Funcionario) => this.funcionarioSubject$.getValue().splice(index, 1)))
   }
 
 }

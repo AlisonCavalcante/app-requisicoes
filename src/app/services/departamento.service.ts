@@ -30,21 +30,10 @@ export class DepartamentoService {
   }
 
   update(departamento: Departamento): Observable<Departamento>{
-    return this.http.patch<Departamento>(Constantes.URL_BASE  + `departamento/${departamento._id}`,departamento)
-    .pipe(
-      tap((dep)=> {
-        let departamentos = this.departamentoSubject$.getValue();
-        let i = departamentos.findIndex(d => d._id === departamento._id);
-        if(i>=0){
-          console.log(dep)
-          departamentos[i] = dep;
-        }
-      })
-    )
+    return this.http.patch<Departamento>(Constantes.URL_BASE  + `departamento/${departamento._id}`,departamento);
   }
 
   delete(departamento: Departamento, index: number): Observable<Departamento> {
-    console.log(departamento._id)
     return this.http.delete<Departamento>(Constantes.URL_BASE +  'departamento/' + departamento._id).pipe(tap((dep: Departamento) => this.departamentoSubject$.getValue().splice(index, 1)))
   }
 

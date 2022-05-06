@@ -7,6 +7,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 
 import { FuncionarioComponent } from './funcionario.component';
 import { DialogInsertFuncionarioComponent } from './dialog-insert-funcionario/dialog-insert-funcionario.component';
+import { FilterPipe } from './filter.pipe';
 
 
 
@@ -14,6 +15,7 @@ import { DialogInsertFuncionarioComponent } from './dialog-insert-funcionario/di
   declarations: [
     FuncionarioComponent,
     DialogInsertFuncionarioComponent,
+    FilterPipe,
   ],
   imports: [
     CommonModule,
